@@ -42,3 +42,11 @@ npm run test:qa
 ```
 
 The command does not call an external model or API. An optional `npm run test:qa:gemini` command sends one short request to Google's Gemini Developer API using `GEMINI_API_KEY` and `GEMINI_MODEL` from `.env` or the shell. It is a connectivity smoke test only; it does not test tool use or task completion. The prompt is synthetic, output is capped at 128 tokens, and a successful response is printed in the terminal. Requests eligible for the Gemini Free tier have no token charge, but quota/model eligibility can vary and paid-tier usage is billed. Google's pricing documentation says free-tier content may be used to improve its products. Do not send customer or confidential data. A model alias may change over time, so record the selected model and run date when comparing results. See [WORKLOG.md](WORKLOG.md) for recent quota and API failure observations.
+
+### Provider connectivity smoke test: `tests/test_gemini_api.py`
+
+This test is deliberately separate from the agent suite. It loads the project `.env`, skips when `GEMINI_API_KEY` is missing, sends one synthetic marker prompt to the model selected by `GEMINI_MODEL`, and asserts that the marker appears in returned text. The command uses pytest `-s` and prints the response text on success. It does not create an agent trace, evaluate tool calls, or assess response quality.
+
+The adapter uses `temperature=0`, `max_output_tokens=128`, thinking level `LOW`, a 30-second HTTP timeout, and one attempt. The token cap includes model thinking, so a too-small cap can produce an empty text response. API/provider failures occur before the print and therefore have no generated response to log.
+
+Provider errors such as `429 RESOURCE_EXHAUSTED`, `503 UNAVAILABLE`, and `504 DEADLINE_EXCEEDED` are not agent-harness failures. A 429 can represent a project/model request, token, or daily quota; diagnose it using the full error details and AI Studio Usage / Rate limits for the API key's project. Do not assume a Free tier project has quota for every model or that enabling billing is required. Check any paid-tier cost before changing billing. Use synthetic prompts only. The observed results and next steps are tracked in [WORKLOG.md](WORKLOG.md).

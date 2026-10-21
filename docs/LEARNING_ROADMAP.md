@@ -11,6 +11,8 @@ This roadmap tracks the repository's agent evaluation work, not personal learnin
 | 4 | CI gates | Planned: deterministic smoke tests per merge request and full evaluation nightly |
 | 5 | Red teaming and corpus operations | Planned: expand injection, privacy leakage, unauthorized action, tool failure, and reviewed production-trace regressions |
 
+The optional `tests/test_gemini_api.py` check is a provider connectivity experiment outside these agent-evaluation stages. The latest user-provided API result is `429 RESOURCE_EXHAUSTED`; see [WORKLOG.md](WORKLOG.md) for diagnosis context. A successful connectivity check does not mean the agent harness is connected to Gemini.
+
 ## Metric boundaries
 
 The local suite uses no LLM judge. Its exact contracts validate the harness and scripted scenarios only. The pinned DeepEval version currently prevents offline use of its native tool metrics; see `docs/TEST_STRATEGY.md`. Future `TaskCompletionMetric` and `ArgumentCorrectnessMetric` results will be probabilistic judge scores; document their thresholds and limitations, compare them with SME labels, and keep them separate from deterministic security/state assertions.

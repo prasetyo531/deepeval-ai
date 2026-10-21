@@ -14,6 +14,7 @@ Tulis artikel setelah eksperimen terkait benar-benar dijalankan. Bedakan hasil s
 ## Panduan penulisan
 
 - Gunakan hanya hasil yang benar-benar dijalankan dan jelaskan apakah targetnya stub, staging, atau produksi.
+- Jika menyebut `tests/test_gemini_api.py`, jelaskan bahwa itu hanya tes konektivitas provider dan tidak menguji agent, tool call, atau kualitas jawaban.
 - Pisahkan kontrak deterministik dari skor judge probabilistik.
 - Sertakan threshold, makna, dan batas tiap metrik.
 - Gunakan data sintetis; jangan publikasikan kredensial, data pelanggan, atau prompt internal.
