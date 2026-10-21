@@ -1,0 +1,8 @@
+{
+  "name": "ai-testing-lab",
+  "private": true,
+  "scripts": {
+    "test:qa": ".venv/bin/pytest -v tests/test_agent_harness.py --html=reports/agent-harness.html --self-contained-html",
+    "test:qa:gemini": ".venv/bin/pytest -v -s -m integration tests/test_gemini_api.py"
+  }
+}
